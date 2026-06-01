@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eye Disease Prediction | EfficientNetB4 · ODIR-5K</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- ── Header ─────────────────────────────────────────────── -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon">&#128065;</span>
+        <span class="logo-text">OcularAI</span>
+        <span class="logo-badge">EfficientNetB4</span>
+      </div>
+      <nav>
+        <a href="/" class="nav-link active">Diagnose</a>
+        <a href="/about" class="nav-link">About</a>
+        <a href="/api/health" class="nav-link" target="_blank">API</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ── Hero ───────────────────────────────────────────────── -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">
+        Multi-Class Eye Disease Prediction
+        <span class="hero-subtitle">ODIR-5K · 8 Disease Classes · EfficientNetB4</span>
+      </h1>
+      <p class="hero-desc">
+        Upload left and/or right fundus retinal images to detect eight ocular
+        conditions using a deep learning model trained on the ODIR-5K dataset.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Main content ───────────────────────────────────────── -->
+  <main class="main-container">
+
+    <!-- Disease chip row -->
+    <div class="disease-chips">
+      {% set colors = ['#27ae60','#e74c3c','#e67e22','#f39c12','#8e44ad','#c0392b','#2980b9','#7f8c8d'] %}
+      {% for label in disease_labels %}
+      <span class="chip" style="--chip-color: {{ colors[loop.index0] }}">
+        {{ disease_codes[loop.index0] }} · {{ label }}
+      </span>
+      {% endfor %}
+    </div>
+
+    <!-- ── Upload card ──────────────────────────────────────── -->
+    <div class="card upload-card">
+      <h2 class="card-title">Upload Fundus Images</h2>
+
+      <form id="uploadForm" enctype="multipart/form-data">
+        <div class="eye-upload-row">
+
+          <!-- Left eye -->
+          <div class="eye-upload-box" id="leftBox">
+            <input type="file" id="leftEyeInput" name="left_eye"
+                   accept=".jpg,.jpeg,.png" hidden />
+            <label for="leftEyeInput" class="upload-label">
+              <div class="upload-icon">&#128065;</div>
+              <span class="upload-text">Left Eye</span>
+              <span class="upload-sub">Click or drag to upload</span>
+            </label>
+            <img id="leftPreview" class="eye-preview hidden" alt="Left eye preview" />
+            <button type="button" class="clear-btn hidden" id="clearLeft">&#10005;</button>
+          </div>
+
+          <!-- Right eye -->
+          <div class="eye-upload-box" id="rightBox">
+            <input type="file" id="rightEyeInput" name="right_eye"
+                   accept=".jpg,.jpeg,.png" hidden />
+            <label for="rightEyeInput" class="upload-label">
+              <div class="upload-icon">&#128065;</div>
+              <span class="upload-text">Right Eye</span>
+              <span class="upload-sub">Click or drag to upload</span>
+            </label>
+            <img id="rightPreview" class="eye-preview hidden" alt="Right eye preview" />
+            <button type="button" class="clear-btn hidden" id="clearRight">&#10005;</button>
+          </div>
+
+        </div><!-- /eye-upload-row -->
+
+        <div class="form-footer">
+          <p class="upload-note">Supported formats: JPG, JPEG, PNG · Max 16 MB</p>
+          <button type="submit" class="btn-predict" id="predictBtn" disabled>
+            <span class="btn-icon">&#128269;</span> Analyse
+          </button>
+        </div>
+      </form>
+    </div><!-- /upload-card -->
+
+    <!-- ── Spinner ──────────────────────────────────────────── -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="spinner"></div>
+      <p>Running inference &hellip;</p>
+    </div>
+
+    <!-- ── Results section ──────────────────────────────────── -->
+    <section id="resultsSection" class="hidden">
+
+      <!-- Summary banner -->
+      <div class="results-header">
+        <h2>Prediction Results</h2>
+        <div id="statusBanner" class="status-banner"></div>
+      </div>
+
+      <!-- Per-eye tabs -->
+      <div class="tabs" id="resultTabs"></div>
+      <div id="resultPanels"></div>
+
+    </section><!-- /resultsSection -->
+
+  </main>
+
+  <!-- ── Footer ─────────────────────────────────────────────── -->
+  <footer class="site-footer">
+    <p>
+      M.Tech Project &mdash; <strong>Aiyesha Rukhsar</strong> &middot; NIT Delhi &middot; 2024
+      &nbsp;|&nbsp;
+      Model: <strong>EfficientNetB4</strong> &middot; Dataset: <strong>ODIR-5K</strong>
+    </p>
+    <p class="disclaimer">
+      For research purposes only. Not a substitute for professional medical advice.
+    </p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

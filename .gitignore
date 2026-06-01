@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+*.egg
+*.whl
+
+# Virtual environments
+venv/
+env/
+.env/
+.venv/
+ENV/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# Dataset — ODIR-5K images and annotations (too large for git)
+data/
+
+# Trained model weights
+models/
+
+# Uploaded images via Flask
+app/static/uploads/
+
+# Training logs and TensorBoard
+logs/
+training_log.csv
+
+# Results and plots
+results/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+
+# Compiled C extensions
+*.c
+
+# Coverage / testing
+htmlcov/
+.coverage
+.pytest_cache/
